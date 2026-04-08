@@ -1,4 +1,19 @@
-import { useState, useEffect } from "react";
+<!-- ═══════════════════════════════════════════════════════════════
+     WHISKERS ESTIMATOR — Squarespace Embed
+     Paste this ENTIRE block into:
+       Settings → Advanced → Code Injection → Footer
+     OR into a "Code Block" on any page.
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- Mount point -->
+<div id="wk-root"></div>
+
+<!-- React + Babel via CDN (no build step needed) -->
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
 
 // HD images — embedded base64, no CDN dependency
 const IMGS = {
@@ -303,7 +318,7 @@ function empty() {
 }
 
 // ─── APP ──────────────────────────────────────────────────────────
-export default function WhiskersEstimator() {
+function WhiskersEstimator() {
   const [step,   setStep]   = useState(0);
   const [vis,    setVis]    = useState(true);
   const [sel,    setSel]    = useState(() => {
@@ -766,3 +781,8 @@ function FounderPresence({ size = "sm", variant = "inline", insight = null }) {
     </div>
   );
 }
+
+// ─── MOUNT ────────────────────────────────────────────────────────
+const _root = document.getElementById("wk-root");
+ReactDOM.createRoot(_root).render(<WhiskersEstimator />);
+</script>
