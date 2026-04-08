@@ -275,6 +275,23 @@ const CSS = `
 .hero-logo-wrap { position:relative; margin-bottom:24px; }
 .hero-logo-wrap img { width:100%; border-radius:22px; display:block; box-shadow:var(--shadow-md); }
 .hero-tagline { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(28,16,24,.6),transparent); border-radius:0 0 22px 22px; padding:28px 18px 16px; }
+
+/* Founder Presence */
+@keyframes fadeInsight { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.founder-inline { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.founder-inline-label { font-size:12px; font-weight:600; color:var(--sub); line-height:1.4; letter-spacing:.1px; }
+.founder-insight-card {
+  display:flex; align-items:flex-start; gap:12px;
+  background:#fff; border:1px solid var(--pkbd);
+  border-radius:16px; padding:14px 16px; margin:16px 0;
+  box-shadow:0 2px 10px rgba(0,0,0,.04);
+  animation:fadeInsight .4s ease both;
+}
+.founder-insight-label { font-size:10px; font-weight:800; color:var(--pklt); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px; }
+.founder-insight-text  { font-size:13px; color:var(--sub); line-height:1.6; }
+.founder-hero { display:flex; flex-direction:column; align-items:center; text-align:center; padding:22px 0 8px; }
+.founder-hero-quote { font-size:14px; font-style:italic; color:var(--sub); line-height:1.65; max-width:272px; }
+.founder-hero-byline { font-size:11px; font-weight:700; color:var(--pklt); margin-top:6px; letter-spacing:.4px; }
 `;
 
 // ─── HELPERS ──────────────────────────────────────────────────────
@@ -330,6 +347,7 @@ export default function WhiskersEstimator() {
             </div>
           </div>
           <span className="s-eyebrow">Step 1 of {total}</span>
+          <FounderPresence size="sm" variant="inline" />
           <h2 className="s-title">What service today?</h2>
           <p className="s-sub">Every visit includes our signature care — personalized for your pup.</p>
           <div className="col">
@@ -364,6 +382,7 @@ export default function WhiskersEstimator() {
           <span className="s-eyebrow">Step 2 of {total}</span>
           <h2 className="s-title">How big is your pup?</h2>
           <p className="s-sub">Size determines the base price and appointment duration.</p>
+          <FounderPresence size="md" variant="card" insight="Most coat problems go unnoticed until the groom. Catching them early is always easier — and cheaper — for your dog." />
           <div className="dog-strip">
             {DOGS.map((u,i) => (
               <img key={i} src={u}
@@ -443,6 +462,7 @@ export default function WhiskersEstimator() {
           <span className="s-eyebrow">Step {total} of {total} — Final Step</span>
           <h2 className="s-title">Upgrade your pup's experience</h2>
           <p className="s-sub">Each add-on is handpicked to make a real difference in how your dog looks, feels, and smells.</p>
+          <FounderPresence size="md" variant="card" insight="Dogs with regular preventive treatments see fewer skin and coat issues year-round. The ones owners skip are usually the ones they wish they hadn't." />
 
           {/* Suggestion strip */}
           <div style={{display:"flex",alignItems:"center",gap:12,background:"linear-gradient(135deg,var(--pkbg),#FFE8F0)",border:"1.5px solid var(--pkbd)",borderRadius:16,padding:"12px 16px",marginBottom:20}}>
@@ -645,6 +665,9 @@ function Result({ sel, price, onReset }) {
         )}
       </div>
 
+      {/* FOUNDER HERO */}
+      <FounderPresence size="lg" variant="hero" />
+
       {/* CTA */}
       <a href="https://book.daysmart.com/api/booking/service?DSID=DC-2126430"
         target="_blank" rel="noopener noreferrer"
@@ -682,6 +705,64 @@ function BkRow({ label, val, amber }) {
     <div className="bk-row">
       <span className="bk-lbl">{label}</span>
       <span className="bk-val" style={{color:amber?"#D97706":undefined}}>{val}</span>
+    </div>
+  );
+}
+
+// ─── FOUNDER PRESENCE ─────────────────────────────────────────────
+// Props:
+//   size    — "sm" (40–48px) | "md" (32px) | "lg" (150px)
+//   variant — "inline" | "card" | "hero"
+//   insight — (card variant) short insight text
+function FounderPresence({ size = "sm", variant = "inline", insight = null }) {
+  const src = IMGS.groomer;
+  const px  = { sm: 48, md: 32, lg: 150 }[size] ?? 48;
+
+  if (variant === "inline") {
+    return (
+      <div className="founder-inline">
+        <img src={src} alt="Julieth, Founder"
+          style={{
+            width: px, height: px, borderRadius: "50%",
+            objectFit: "cover", objectPosition: "top", flexShrink: 0,
+            boxShadow: "0 2px 8px rgba(0,0,0,.10)", border: "2px solid var(--pkbd)"
+          }} />
+        <span className="founder-inline-label">Built by an operator. Not an agency.</span>
+      </div>
+    );
+  }
+
+  if (variant === "card") {
+    return (
+      <div className="founder-insight-card">
+        <img src={src} alt="Julieth"
+          style={{
+            width: 32, height: 32, borderRadius: "50%",
+            objectFit: "cover", objectPosition: "top", flexShrink: 0,
+            marginTop: 2, boxShadow: "0 1px 6px rgba(0,0,0,.08)"
+          }} />
+        <div>
+          <div className="founder-insight-label">Julieth's Insight</div>
+          <div className="founder-insight-text">{insight}</div>
+        </div>
+      </div>
+    );
+  }
+
+  // hero
+  return (
+    <div className="founder-hero">
+      <img src={src} alt="Julieth, Founder"
+        style={{
+          width: px, height: px, borderRadius: "50%",
+          objectFit: "cover", objectPosition: "top", display: "block",
+          boxShadow: "0 8px 28px rgba(0,0,0,.12)", border: "3px solid var(--pkbd)",
+          marginBottom: 14
+        }} />
+      <p className="founder-hero-quote">
+        "I've seen this exact pattern before. This is fixable."
+      </p>
+      <div className="founder-hero-byline">Julieth G. · Founder &amp; Lead Groomer</div>
     </div>
   );
 }
