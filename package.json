@@ -17,5 +17,8 @@
   "dependencies": {
     "@mendable/firecrawl-js": "^4.18.5",
     "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
   }
 }
