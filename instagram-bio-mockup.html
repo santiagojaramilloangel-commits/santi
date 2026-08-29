@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup de bio — @thedailysystems</title>
+<style>
+  :root{
+    --ig-text:#000;
+    --ig-secondary:#737373;
+    --ig-separator:#dbdbdb;
+    --ig-button:#efefef;
+    --ig-link:#00376b;
+    --font:-apple-system, "Segoe UI", Roboto, Helvetica, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:#f2f2f2;
+    font-family:var(--font);
+    color:var(--ig-text);
+    min-height:100vh;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    padding:40px 24px;
+  }
+  .stage{
+    display:flex;
+    gap:32px;
+    align-items:flex-start;
+  }
+
+  /* ---------- Marco de teléfono ---------- */
+  .phone{
+    /* borde de 10px por fuera: la pantalla interior mide exactamente 390x844,
+       el ancho real de Instagram, para que la bio corte donde cortaría en el móvil */
+    width:410px;
+    height:864px;
+    border:10px solid #000;
+    border-radius:44px;
+    background:#fff;
+    box-shadow:0 18px 48px rgba(0,0,0,.18);
+    overflow:hidden;
+    flex:0 0 auto;
+  }
+  .screen{
+    height:100%;
+    overflow-y:auto;
+    background:#fff;
+    -webkit-overflow-scrolling:touch;
+  }
+  .screen::-webkit-scrollbar{width:0;}
+
+  /* ---------- Barra de estado ---------- */
+  .statusbar{
+    height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 22px;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.2px;
+  }
+  .statusbar .right{display:flex;align-items:center;gap:5px;}
+
+  /* ---------- Barra superior ---------- */
+  .topbar{
+    height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 14px;
+  }
+  .topbar .handle{
+    font-size:16px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+  .topbar .actions{display:flex;align-items:center;gap:20px;}
+  .icon{display:block;}
+
+  /* ---------- Cabecera de perfil ---------- */
+  .header-row{
+    display:flex;
+    align-items:center;
+    padding:6px 16px 0;
+    gap:22px;
+  }
+  .avatar{
+    width:86px;
+    height:86px;
+    border-radius:50%;
+    background:#dbdbdb;
+    flex:0 0 auto;
+    overflow:hidden;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+  }
+  .stats{
+    flex:1;
+    display:flex;
+    justify-content:space-around;
+    text-align:center;
+  }
+  .stat .num{
+    font-size:16px;
+    font-weight:700;
+    line-height:20px;
+  }
+  .stat .label{
+    font-size:12px;
+    color:var(--ig-secondary);
+    line-height:16px;
+  }
+
+  /* ---------- Bloque de texto ---------- */
+  .profile-text{padding:12px 16px 0;}
+  .display-name{font-size:14px;font-weight:700;line-height:18px;}
+  .category{font-size:14px;color:var(--ig-secondary);line-height:18px;}
+  .bio-wrap{position:relative;margin-top:2px;}
+  .bio{
+    font-size:14px;
+    line-height:18px;
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+  .bio.clamped{
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .more-btn{
+    position:absolute;
+    right:0;
+    bottom:0;
+    background:#fff;
+    padding-left:8px;
+    font-size:14px;
+    line-height:18px;
+    color:var(--ig-secondary);
+    cursor:pointer;
+    display:none;
+  }
+  .bio-wrap.truncated .more-btn{display:block;}
+  .link{
+    font-size:14px;
+    line-height:18px;
+    color:var(--ig-link);
+    font-weight:600;
+    margin-top:2px;
+  }
+  .link-note{
+    font-size:14px;
+    line-height:18px;
+    color:var(--ig-secondary);
+  }
+
+  /* ---------- Botones ---------- */
+  .buttons{
+    display:flex;
+    gap:8px;
+    padding:14px 16px 0;
+  }
+  .btn{
+    flex:1;
+    background:var(--ig-button);
+    border:0;
+    border-radius:8px;
+    height:32px;
+    font-family:var(--font);
+    font-size:14px;
+    font-weight:700;
+    color:var(--ig-text);
+    cursor:pointer;
+  }
+
+  /* ---------- Destacadas ---------- */
+  .highlights{
+    display:flex;
+    gap:18px;
+    padding:18px 16px 16px;
+    overflow-x:auto;
+  }
+  .highlights::-webkit-scrollbar{height:0;}
+  .highlight{width:64px;flex:0 0 auto;text-align:center;}
+  .highlight .ring{
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    border:1px solid var(--ig-separator);
+    background:#fafafa;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .highlight .ring span{
+    font-size:11px;
+    color:#c7c7c7;
+    font-weight:600;
+  }
+  .highlight .h-label{
+    font-size:12px;
+    line-height:16px;
+    margin-top:6px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  /* ---------- Pestañas ---------- */
+  .tabs{
+    display:flex;
+    border-top:1px solid var(--ig-separator);
+  }
+  .tab{
+    flex:1;
+    height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    font-size:12px;
+    font-weight:600;
+    color:var(--ig-secondary);
+    border-bottom:1px solid transparent;
+    cursor:pointer;
+  }
+  .tab.active{
+    color:var(--ig-text);
+    border-bottom:1px solid var(--ig-text);
+  }
+
+  /* ---------- Grilla ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:2px;
+    padding-bottom:24px;
+  }
+  .cell{
+    position:relative;
+    aspect-ratio:1/1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px;
+    text-align:center;
+  }
+  .cell span{
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    line-height:14px;
+  }
+
+  /* ---------- Panel ---------- */
+  .panel{
+    width:320px;
+    flex:0 0 auto;
+    background:#fff;
+    border:1px solid var(--ig-separator);
+    border-radius:10px;
+    padding:18px;
+    font-size:13px;
+  }
+  .panel h1{
+    font-size:14px;
+    font-weight:700;
+    margin:0 0 4px;
+  }
+  .panel .sub{
+    font-size:12px;
+    color:var(--ig-secondary);
+    line-height:16px;
+    margin:0 0 16px;
+  }
+  .field{margin-bottom:16px;}
+  .field > label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  select, input[type="text"], textarea{
+    width:100%;
+    font-family:var(--font);
+    font-size:13px;
+    color:var(--ig-text);
+    background:#fff;
+    border:1px solid var(--ig-separator);
+    border-radius:6px;
+    padding:8px;
+  }
+  textarea{
+    min-height:104px;
+    line-height:18px;
+    resize:vertical;
+  }
+  .counter{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-size:12px;
+    color:var(--ig-secondary);
+    margin-top:6px;
+  }
+  .counter .n{font-weight:700;color:var(--ig-text);}
+  .counter.over .n, .counter.over .lim{color:#c00;}
+  .counter.over{color:#c00;}
+  .row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .row label{font-size:12px;font-weight:700;}
+  .hint{
+    font-size:11px;
+    color:var(--ig-secondary);
+    line-height:15px;
+    margin-top:6px;
+  }
+  .panel hr{
+    border:0;
+    border-top:1px solid var(--ig-separator);
+    margin:16px 0;
+  }
+  .mini-btn{
+    font-family:var(--font);
+    font-size:12px;
+    font-weight:700;
+    background:var(--ig-button);
+    border:0;
+    border-radius:6px;
+    padding:7px 10px;
+    cursor:pointer;
+  }
+  .lines-select{width:auto;padding:4px 6px;font-size:12px;}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ===================== TELÉFONO ===================== -->
+  <div class="phone">
+    <div class="screen">
+
+      <div class="statusbar">
+        <div>9:41</div>
+        <div class="right">
+          <svg class="icon" width="17" height="11" viewBox="0 0 17 11" aria-hidden="true">
+            <rect x="0"  y="7" width="3" height="4"  rx="1" fill="#000"/>
+            <rect x="4.5" y="5" width="3" height="6"  rx="1" fill="#000"/>
+            <rect x="9"  y="2.5" width="3" height="8.5" rx="1" fill="#000"/>
+            <rect x="13.5" y="0" width="3" height="11" rx="1" fill="#000"/>
+          </svg>
+          <svg class="icon" width="16" height="12" viewBox="0 0 16 12" aria-hidden="true">
+            <path d="M8 10.4l1.6-1.7a2.3 2.3 0 0 0-3.2 0L8 10.4z" fill="#000"/>
+            <path d="M4.1 6.3a5.6 5.6 0 0 1 7.8 0" stroke="#000" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+            <path d="M1.6 3.6a9.2 9.2 0 0 1 12.8 0" stroke="#000" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          </svg>
+          <svg class="icon" width="25" height="12" viewBox="0 0 25 12" aria-hidden="true">
+            <rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#000" stroke-opacity=".4" fill="none"/>
+            <rect x="2" y="2" width="15" height="8" rx="2" fill="#000"/>
+            <path d="M23 4v4a2.2 2.2 0 0 0 0-4z" fill="#000" fill-opacity=".4"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="topbar">
+        <div class="handle">
+          <span id="ig-handle">@thedailysystems</span>
+          <svg class="icon" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+            <path d="M2 4.5L6 8.5L10 4.5" stroke="#000" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="actions">
+          <!-- nueva publicación -->
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="#000" stroke-width="1.8" fill="none"/>
+            <path d="M12 8v8M8 12h8" stroke="#000" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <!-- notificaciones -->
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0-6 6v3.5L4.5 16h15L18 12.5V9a6 6 0 0 0-6-6z" stroke="#000" stroke-width="1.7" fill="none" stroke-linejoin="round"/>
+            <path d="M10 19a2 2 0 0 0 4 0" stroke="#000" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+          </svg>
+          <!-- menú -->
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="#000" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="header-row">
+        <div class="avatar">
+          <svg width="86" height="86" viewBox="0 0 86 86" aria-hidden="true">
+            <circle cx="43" cy="33" r="15" fill="#b6b6b6"/>
+            <path d="M43 52c-15 0-26 9-28 22h56c-2-13-13-22-28-22z" fill="#b6b6b6"/>
+          </svg>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="num">—</div><div class="label">publicaciones</div></div>
+          <div class="stat"><div class="num">—</div><div class="label">seguidores</div></div>
+          <div class="stat"><div class="num">—</div><div class="label">seguidos</div></div>
+        </div>
+      </div>
+
+      <div class="profile-text">
+        <div class="display-name" id="ig-name">Santiago | Pet &amp; Service Ops</div>
+        <div class="category">Consulting Agency</div>
+        <div class="bio-wrap" id="bio-wrap">
+          <div class="bio" id="ig-bio"></div>
+          <span class="more-btn" id="more-btn">... más</span>
+        </div>
+        <div class="link" id="ig-link">thedailysystems.co</div>
+        <div class="link-note" id="ig-link-note">Enlace en bio</div>
+      </div>
+
+      <div class="buttons">
+        <button class="btn" type="button">Editar perfil</button>
+        <button class="btn" type="button">Compartir perfil</button>
+      </div>
+
+      <div class="highlights" id="ig-highlights"></div>
+
+      <div class="tabs">
+        <div class="tab active">
+          <svg class="icon" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+            <rect x="0.9" y="0.9" width="16.2" height="16.2" stroke="currentColor" stroke-width="1.6" fill="none"/>
+            <path d="M6.3 1v16M11.7 1v16M1 6.3h16M1 11.7h16" stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+          <span>Publicaciones</span>
+        </div>
+        <div class="tab">
+          <svg class="icon" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+            <rect x="0.9" y="0.9" width="16.2" height="16.2" rx="3.5" stroke="currentColor" stroke-width="1.6" fill="none"/>
+            <path d="M1 5.6h16M6.2 1l2.6 4.6M11 1l2.6 4.6" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M7.4 8.4l4.2 2.6-4.2 2.6z" fill="currentColor"/>
+          </svg>
+          <span>Reels</span>
+        </div>
+        <div class="tab">
+          <svg class="icon" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+            <path d="M1 4.5L9 1l8 3.5v9L9 17l-8-3.5z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+            <circle cx="9" cy="7.4" r="2.2" stroke="currentColor" stroke-width="1.4" fill="none"/>
+            <path d="M5.6 12.6c.7-1.6 1.9-2.4 3.4-2.4s2.7.8 3.4 2.4" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          </svg>
+          <span>Etiquetadas</span>
+        </div>
+      </div>
+
+      <div class="grid" id="ig-grid"></div>
+
+    </div>
+  </div>
+
+  <!-- ===================== PANEL ===================== -->
+  <div class="panel">
+    <h1>Revisión de bio</h1>
+    <p class="sub">Los contadores del perfil son provisionales (—). Edita el texto y mira el resultado en el teléfono.</p>
+
+    <div class="field">
+      <label for="variant">Variante de bio</label>
+      <select id="variant">
+        <option value="A">A — actual</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+      </select>
+      <div class="hint" id="variant-state">Mostrando la variante A sin cambios.</div>
+    </div>
+
+    <div class="field">
+      <label for="bio-input">Bio (editable)</label>
+      <textarea id="bio-input" spellcheck="false"></textarea>
+      <div class="counter" id="bio-counter">
+        <span>Caracteres de la bio</span>
+        <span><span class="n" id="bio-count">0</span> <span class="lim">/ 150</span></span>
+      </div>
+      <div class="hint">Incluye los saltos de línea. Los emoji cuentan como 1 carácter.</div>
+      <div style="margin-top:10px;">
+        <button class="mini-btn" type="button" id="reset-btn">Restaurar variante</button>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="field">
+      <label for="name-input">Nombre visible</label>
+      <input type="text" id="name-input" spellcheck="false">
+      <div class="counter" id="name-counter">
+        <span>Caracteres del nombre</span>
+        <span><span class="n" id="name-count">0</span> <span class="lim">/ 30</span></span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="link-input">Link</label>
+      <input type="text" id="link-input" spellcheck="false" value="thedailysystems.co">
+      <div class="hint">Vacío = sin link ni línea de “Enlace en bio”.</div>
+    </div>
+
+    <hr>
+
+    <div class="field">
+      <div class="row">
+        <label for="trunc-toggle">Simular corte de Instagram</label>
+        <input type="checkbox" id="trunc-toggle" checked>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <label for="lines-input">Líneas visibles antes del corte</label>
+        <select id="lines-input" class="lines-select">
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+      <div class="hint">Si la bio supera esa altura aparece “... más” al final, como en la app. Púlsalo en el teléfono para expandir.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Variantes precargadas (edítalas a tu gusto) ---------- */
+  var VARIANTS = {
+    A: "Five years on the floor with customers.\nNow I build the systems that keep them coming back.\nService & pet care SMBs · NYC · EN/ES 👇",
+    B: "Five years on the floor with customers.\nNow I build the systems behind the front desk.\nService & pet care SMBs · NYC · EN/ES 👇",
+    C: "I spent five years with customers, in person.\nNow I design the systems that bring them back.\nService & pet care SMBs · NYC · EN/ES 👇",
+    D: "Systems for service & pet care SMBs.\nFive years on the floor, now behind the process.\nNYC · EN/ES 👇",
+    E: "Operations for service & pet care SMBs.\nFrom the floor to the process.\nNYC · EN/ES 👇"
+  };
+
+  var DEFAULT_NAME = "Santiago | Pet & Service Ops";
+
+  var HIGHLIGHTS = ["Start Here", "Systems", "Client Care", "Pet Care", "Results"];
+
+  /* 3 temas × 3 posts, títulos cortos y genéricos, sin cifras */
+  var POSTS = [
+    { t: "Reservas que no se pierden",      c: "#14532d" },
+    { t: "Seguimiento después de la visita", c: "#166534" },
+    { t: "Recompra sin perseguir al cliente", c: "#15803d" },
+    { t: "La primera impresión al reservar", c: "#7c2d12" },
+    { t: "Respuestas claras y a tiempo",    c: "#9a3412" },
+    { t: "Cuando algo sale mal",            c: "#b45309" },
+    { t: "Un proceso por escrito",          c: "#1e3a5f" },
+    { t: "Quién hace qué y cuándo",         c: "#1d4ed8" },
+    { t: "Menos pasos, mismo resultado",    c: "#3730a3" }
+  ];
+
+  var BIO_LIMIT = 150;
+  var NAME_LIMIT = 30;
+  var LINE_HEIGHT = 18;
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  var bioEl      = $("ig-bio");
+  var bioWrap    = $("bio-wrap");
+  var moreBtn    = $("more-btn");
+  var nameEl     = $("ig-name");
+  var linkEl     = $("ig-link");
+  var linkNoteEl = $("ig-link-note");
+
+  var variantSel = $("variant");
+  var variantState = $("variant-state");
+  var bioInput   = $("bio-input");
+  var nameInput  = $("name-input");
+  var linkInput  = $("link-input");
+  var truncToggle= $("trunc-toggle");
+  var linesInput = $("lines-input");
+  var resetBtn   = $("reset-btn");
+
+  var expanded = false;
+
+  /* ---------- Construcción estática ---------- */
+  function buildHighlights(){
+    var box = $("ig-highlights");
+    HIGHLIGHTS.forEach(function(label){
+      var item = document.createElement("div");
+      item.className = "highlight";
+      var ring = document.createElement("div");
+      ring.className = "ring";
+      var inner = document.createElement("span");
+      inner.textContent = label.charAt(0).toUpperCase();
+      ring.appendChild(inner);
+      var cap = document.createElement("div");
+      cap.className = "h-label";
+      cap.textContent = label;
+      item.appendChild(ring);
+      item.appendChild(cap);
+      box.appendChild(item);
+    });
+  }
+
+  function buildGrid(){
+    var grid = $("ig-grid");
+    POSTS.forEach(function(p){
+      var cell = document.createElement("div");
+      cell.className = "cell";
+      cell.style.background = p.c;
+      var span = document.createElement("span");
+      span.textContent = p.t;
+      cell.appendChild(span);
+      grid.appendChild(cell);
+    });
+  }
+
+  /* ---------- Contadores (por punto de código: emoji = 1) ---------- */
+  function countChars(str){
+    return Array.from(str).length;
+  }
+
+  function updateCounter(counterEl, valueEl, count, limit){
+    valueEl.textContent = count;
+    counterEl.classList.toggle("over", count > limit);
+  }
+
+  /* ---------- Corte "... más" ---------- */
+  function applyTruncation(){
+    bioEl.style.webkitLineClamp = linesInput.value;
+    var shouldClamp = truncToggle.checked && !expanded;
+    bioEl.classList.toggle("clamped", shouldClamp);
+
+    if (!shouldClamp) {
+      bioWrap.classList.remove("truncated");
+      return;
+    }
+    var maxHeight = parseInt(linesInput.value, 10) * LINE_HEIGHT;
+    var overflows = bioEl.scrollHeight > maxHeight + 1;
+    bioWrap.classList.toggle("truncated", overflows);
+  }
+
+  /* ---------- Render ---------- */
+  function renderBio(){
+    var text = bioInput.value;
+    bioEl.textContent = text;
+    updateCounter($("bio-counter"), $("bio-count"), countChars(text), BIO_LIMIT);
+    applyTruncation();
+  }
+
+  function renderName(){
+    var text = nameInput.value;
+    nameEl.textContent = text;
+    nameEl.style.display = text.length ? "" : "none";
+    updateCounter($("name-counter"), $("name-count"), countChars(text), NAME_LIMIT);
+  }
+
+  function renderLink(){
+    var text = linkInput.value.trim();
+    if (text) {
+      linkEl.textContent = text;
+      linkEl.style.display = "";
+      linkNoteEl.style.display = "";
+    } else {
+      linkEl.style.display = "none";
+      linkNoteEl.style.display = "none";
+    }
+  }
+
+  function loadVariant(key){
+    bioInput.value = VARIANTS[key];
+    expanded = false;
+    variantState.textContent = "Mostrando la variante " + key + " sin cambios.";
+    renderBio();
+  }
+
+  /* ---------- Eventos ---------- */
+  variantSel.addEventListener("change", function(){
+    loadVariant(variantSel.value);
+  });
+
+  resetBtn.addEventListener("click", function(){
+    loadVariant(variantSel.value);
+  });
+
+  bioInput.addEventListener("input", function(){
+    expanded = false;
+    var key = variantSel.value;
+    variantState.textContent = (bioInput.value === VARIANTS[key])
+      ? "Mostrando la variante " + key + " sin cambios."
+      : "Texto propio (variante " + key + " editada).";
+    renderBio();
+  });
+
+  nameInput.addEventListener("input", renderName);
+  linkInput.addEventListener("input", renderLink);
+
+  truncToggle.addEventListener("change", function(){
+    expanded = false;
+    applyTruncation();
+  });
+
+  linesInput.addEventListener("change", function(){
+    expanded = false;
+    applyTruncation();
+  });
+
+  moreBtn.addEventListener("click", function(){
+    expanded = true;
+    applyTruncation();
+  });
+
+  window.addEventListener("resize", applyTruncation);
+
+  /* ---------- Init ---------- */
+  buildHighlights();
+  buildGrid();
+  nameInput.value = DEFAULT_NAME;
+  renderName();
+  renderLink();
+  loadVariant("A");
+})();
+</script>
+</body>
+</html>
