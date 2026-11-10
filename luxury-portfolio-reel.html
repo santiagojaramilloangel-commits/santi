@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Portfolio Reel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Jost:wght@300;400;500&display=swap');
+
+        :root {
+            --bg-color: #08110D; /* Deep forest green / warm black */
+            --text-color: #FFFFF0; /* Ivory */
+            --accent-color: #D4AF37; /* Champagne Gold */
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Jost', sans-serif;
+            overflow: hidden;
+        }
+
+        .reel-container {
+            width: 1080px;
+            height: 1920px;
+            flex-shrink: 0;
+            background-color: var(--bg-color);
+            position: relative;
+            overflow: hidden;
+            transform-origin: center center;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        /* Subtle film grain overlay */
+        .film-grain {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.08"/%3E%3C/svg%3E');
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Fine gold frame */
+        .gold-frame {
+            position: absolute;
+            top: 40px; left: 40px; right: 40px; bottom: 40px;
+            border: 1px solid var(--accent-color);
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 9;
+        }
+
+        .scene {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 80px; /* Kept away from IG UI */
+            box-sizing: border-box;
+        }
+
+        .scene.active {
+            opacity: 1;
+        }
+
+        .bg-image {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            transform: scale(1.05);
+            transition: transform 5s linear;
+        }
+
+        .scene.active .bg-image {
+            transform: scale(1.15); /* Slow zoom in */
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.5s ease 0.5s, transform 1.5s ease 0.5s;
+        }
+
+        .scene.active .content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2 {
+            font-family: 'Bodoni Moda', serif;
+            color: var(--text-color);
+            margin: 0 0 20px 0;
+            font-weight: 400;
+        }
+
+        h1 {
+            font-size: 80px;
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: 60px;
+        }
+
+        p {
+            font-size: 32px;
+            color: var(--text-color);
+            font-weight: 300;
+            letter-spacing: 1px;
+            line-height: 1.4;
+        }
+
+        .tag {
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="reel-container">
+    <div class="film-grain"></div>
+    <div class="gold-frame"></div>
+
+    <!-- Hook (0-3s) -->
+    <div class="scene active" id="scene-1">
+        <div class="bg-image" style="background-image: url('image_10.png');"></div>
+        <div class="content">
+            <span class="tag">Digital Infrastructure</span>
+            <h1>A website should do more than look good.</h1>
+        </div>
+    </div>
+
+    <!-- Scene 2 (3-7s) -->
+    <div class="scene" id="scene-2">
+        <div class="bg-image" style="background-image: url('image_7.png'); background-position: top;"></div>
+        <div class="content">
+            <span class="tag">The Portfolio</span>
+            <h2>Five businesses.<br>Five customer journeys.</h2>
+            <p>Built around the next step.</p>
+        </div>
+    </div>
+
+    <!-- Scene 3 (7-11s) -->
+    <div class="scene" id="scene-3">
+        <div class="bg-image" style="background-image: url('image_9.png');"></div>
+        <div class="content">
+            <span class="tag">Case Study</span>
+            <h2>Organize four services around one business.</h2>
+            <p>Daycare. Boarding. Grooming &amp; Baths.</p>
+        </div>
+    </div>
+
+    <!-- Scene 4 (11-15s) -->
+    <div class="scene" id="scene-4">
+        <div class="bg-image" style="background-image: url('image_11.png');"></div>
+        <div class="content">
+            <span class="tag">User Experience</span>
+            <h2>Beauty through touch.</h2>
+            <p>Make the first appointment request easy.</p>
+        </div>
+    </div>
+
+    <!-- Scene 5: Offer / Closing (15-20s) -->
+    <div class="scene" id="scene-5">
+        <div class="bg-image" style="background-image: url('image_8.png'); background-position: center 20%;"></div>
+        <div class="content">
+            <span class="tag">Operations &amp; Systems Project Lead</span>
+            <h2>Santiago Jaramillo</h2>
+            <p>I build the systems myself.</p>
+            <br><br>
+            <p style="color: var(--accent-color);">See the work.<br>Start a conversation.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Responsive scaling for previewing on desktop.
+    // Add ?export to the URL to fill the viewport exactly (for 1080x1920 capture).
+    const exportMode = new URLSearchParams(location.search).has('export');
+    function scaleContainer() {
+        const container = document.querySelector('.reel-container');
+        const scale = Math.min(window.innerHeight / 1920, window.innerWidth / 1080);
+        container.style.transform = `scale(${exportMode ? scale : scale * 0.95})`;
+    }
+    window.addEventListener('resize', scaleContainer);
+    scaleContainer();
+
+    // Scene transition logic (Total: ~20 seconds)
+    const scenes = document.querySelectorAll('.scene');
+    const timings = [3500, 4000, 4000, 4000, 4500]; // Duration per scene in ms
+    let currentScene = 0;
+
+    function nextScene() {
+        scenes[currentScene].classList.remove('active');
+        currentScene++;
+
+        if (currentScene < scenes.length) {
+            scenes[currentScene].classList.add('active');
+            setTimeout(nextScene, timings[currentScene]);
+        }
+    }
+
+    // Start sequence after initial load
+    setTimeout(nextScene, timings[0]);
+</script>
+</body>
+</html>
